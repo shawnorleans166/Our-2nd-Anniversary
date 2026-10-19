@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Happy 2nd Anniversary, My Love</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Cormorant Garamond, Playfair Display, Caveat (Handwriting) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons for vintage UI touches -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            parchment: '#f7f2e7',
+            aged: '#eadecb',
+            burgundy: '#632626',
+            wine: '#4a1515',
+            ink: '#2b241e',
+            antiqueGold: '#997738',
+            antiqueBronze: '#795d2d',
+            sepiaBrown: '#574838'
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'serif'],
+            display: ['"Playfair Display"', 'serif'],
+            handwriting: ['"Caveat"', 'cursive'],
+            typewriter: ['"Special Elite"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Vintage Paper Texture & Ambient Feel */
+    body {
+      background-color: #f7f2e7;
+      background-image: 
+        radial-gradient(#e5d9c5 1px, transparent 1px),
+        radial-gradient(#d6c5ad 1px, #f7f2e7 1px);
+      background-size: 24px 24px;
+      background-position: 0 0, 12px 12px;
+      color: #2b241e;
+      overflow-x: hidden;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Deckled / Torn Paper Edges & Subtle Borders */
+    .vintage-card {
+      background: #fffdf9;
+      box-shadow: 0 4px 20px rgba(74, 21, 21, 0.08), 0 1px 3px rgba(0,0,0,0.05);
+      border: 1px solid #e0d2bd;
+      position: relative;
+    }
+
+    /* Polaroid photo look */
+    .polaroid {
+      background: #ffffff;
+      padding: 12px 12px 42px 12px;
+      box-shadow: 0 10px 25px -5px rgba(43, 36, 30, 0.15), 0 2px 6px rgba(0, 0, 0, 0.08);
+      border-radius: 2px;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+      position: relative;
+    }
+    .polaroid:hover, .polaroid:active {
+      transform: translateY(-4px) scale(1.02) !important;
+      box-shadow: 0 18px 30px -4px rgba(43, 36, 30, 0.22);
+      z-index: 10;
+    }
+
+    /* Washi tape graphic for photos */
+    .washi-tape {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 24px;
+      background: rgba(224, 210, 189, 0.7);
+      backdrop-filter: blur(2px);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      border-left: 2px dashed rgba(160, 140, 120, 0.4);
+      border-right: 2px dashed rgba(160, 140, 120, 0.4);
+      z-index: 5;
+    }
+
+    /* Wax Seal Button */
+    .wax-seal {
+      width: 76px;
+      height: 76px;
+      background: radial-gradient(circle at 35% 35%, #8c2b2b, #521616 70%);
+      border-radius: 50%;
+      box-shadow: 0 6px 14px rgba(60, 10, 10, 0.45), inset 0 -3px 5px rgba(0,0,0,0.4), inset 0 3px 5px rgba(255,255,255,0.25);
+      border: 3px double #3e0d0d;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.35s ease;
+      position: relative;
+    }
+    .wax-seal:active {
+      transform: scale(0.92);
+      box-shadow: 0 2px 6px rgba(60, 10, 10, 0.6);
+    }
+    .wax-seal::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px dashed rgba(255, 230, 200, 0.35);
+      border-radius: 50%;
+    }
+
+    /* Flip Card for 'Reasons I Love You' */
+    .flip-card {
+      perspective: 1000px;
+      height: 175px;
+    }
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+    .flip-card-back {
+      transform: rotateY(180deg);
+      background: #fbf7ee;
+      border: 1px dashed #c4b097;
+    }
+
+    /* Subtle Floating Petals / Particles */
+    .heart-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 40;
+      color: rgba(140, 43, 43, 0.35);
+      animation: floatUp 8s linear infinite;
+    }
+    @keyframes floatUp {
+      0% {
+        transform: translateY(105vh) rotate(0deg) scale(0.7);
+        opacity: 0;
+      }
+      20% { opacity: 0.7; }
+      80% { opacity: 0.6; }
+      100% {
+        transform: translateY(-10vh) rotate(360deg) scale(1.1);
+        opacity: 0;
+      }
+    }
+
+    /* Stamp Effect */
+    .post-stamp {
+      border: 2px dashed #997738;
+      padding: 4px 8px;
+      display: inline-block;
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: #997738;
+      transform: rotate(-4deg);
+    }
+
+    /* Smooth Scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body class="font-serif antialiased selection:bg-burgundy selection:text-white">
+
+  <!-- Ambient Audio Floating Player Bar -->
+  <aside aria-label="Music Player" class="fixed top-3 right-3 z-50">
+    <button id="musicToggleBtn" 
+            class="flex items-center gap-2 bg-[#fdfbf7]/90 backdrop-blur-md border border-[#cbbb9f] text-ink px-3 py-1.5 rounded-full shadow-md text-xs tracking-wider transition active:scale-95 hover:border-burgundy">
+      <i id="musicIcon" class="fa-solid fa-compact-disc text-antiqueBronze text-sm animate-spin-slow"></i>
+      <span id="musicStatus" class="font-sans font-medium text-[11px] uppercase tracking-wider text-sepiaBrown">Play Melodies</span>
+    </button>
+  </aside>
+
+  <!-- Container for Floating Hearts / Rose Petals -->
+  <div id="particlesContainer" class="pointer-events-none fixed inset-0 overflow-hidden z-20"></div>
+
+  <!-- MAIN WRAPPER (Optimized for Mobile Screens max-w-md / md:max-w-xl) -->
+  <main class="max-w-md md:max-w-lg mx-auto min-h-screen px-4 py-8 flex flex-col justify-start relative">
+
+    <!-- ==============================================
+         1. HERO / COVER SECTION
+    ============================================== -->
+    <header class="text-center pt-8 pb-10 relative">
+      
+      <!-- Vintage Postage Stamp Header Element -->
+      <div class="flex justify-center mb-4">
+        <div class="post-stamp">
+          <i class="fa-solid fa-heart text-[9px] mr-1"></i> Two Years of Us <i class="fa-solid fa-feather text-[9px] ml-1"></i>
+        </div>
+      </div>
+
+      <!-- Main Heading with Calligraphy Flair -->
+      <h1 class="text-4xl sm:text-5xl font-display text-burgundy italic font-bold tracking-tight mb-2">
+        Happy 2nd Anniversary
+      </h1>
+      <p class="font-handwriting text-2xl sm:text-3xl text-sepiaBrown mt-1">
+        "Two years has passed, but eternity is our goal."
+      </p>
+
+      <!-- Decorative Divider -->
+      <div class="flex items-center justify-center my-6 gap-3 text-antiqueGold opacity-80">
+        <span class="w-12 h-[1px] bg-antiqueGold"></span>
+        <i class="fa-solid fa-gem text-xs"></i>
+        <span class="w-12 h-[1px] bg-antiqueGold"></span>
+      </div>
+
+      <!-- Live Counter Box (Aged Parchment Ticker) -->
+      <section aria-label="Milestone Ticker" class="vintage-card rounded-xl p-4 sm:p-5 mx-2 text-center border border-[#dac8af]">
+        <h2 class="text-xs font-sans uppercase tracking-widest text-[#795d2d] mb-3">Our Love Story In Numbers</h2>
+        
+        <div class="grid grid-cols-3 gap-2.5 text-center font-typewriter max-w-sm mx-auto">
+          <div class="bg-[#f5ede0] p-2.5 rounded border border-[#dfd2be]">
+            <span id="counterDays" class="block text-xl sm:text-2xl font-bold text-burgundy">730</span>
+            <span class="text-[9px] tracking-wider uppercase font-sans text-sepiaBrown">Days</span>
+          </div>
+          <div class="bg-[#f5ede0] p-2.5 rounded border border-[#dfd2be]">
+            <span id="counterHours" class="block text-xl sm:text-2xl font-bold text-burgundy">17.5k</span>
+            <span class="text-[9px] tracking-wider uppercase font-sans text-sepiaBrown">Hours</span>
+          </div>
+          <div class="bg-[#f5ede0] p-2.5 rounded border border-[#dfd2be]">
+            <span id="counterMinutes" class="block text-xl sm:text-2xl font-bold text-burgundy">1 mil</span>
+            <span class="text-[9px] tracking-wider uppercase font-sans text-sepiaBrown">Minutes</span>
+          </div>
+        </div>
+
+        <p class="font-serif italic text-sm sm:text-base text-sepiaBrown mt-4 mb-1 px-2 leading-relaxed">
+          “So I will betroth you to Me forever; I will betroth you in righteousness and justice, in loving devotion and compassion.”
+        </p>
+      </section>
+
+      <!-- Quick Navigation Buttons -->
+      <nav class="flex flex-wrap justify-center gap-2.5 mt-8 px-2">
+        <a href="#memories" class="text-xs font-sans tracking-wide px-3.5 py-2 rounded-full bg-[#eee3d1] hover:bg-[#e4d4bd] text-ink border border-[#cbbb9f] shadow-sm flex items-center gap-1.5 transition active:scale-95">
+          <i class="fa-regular fa-image text-burgundy"></i> Polaroid Album
+        </a>
+        <a href="#notes" class="text-xs font-sans tracking-wide px-3.5 py-2 rounded-full bg-[#eee3d1] hover:bg-[#e4d4bd] text-ink border border-[#cbbb9f] shadow-sm flex items-center gap-1.5 transition active:scale-95">
+          <i class="fa-regular fa-heart text-burgundy"></i> Love Notes
+        </a>
+        <a href="#letter" class="text-xs font-sans tracking-wide px-3.5 py-2 rounded-full bg-burgundy text-[#fffbf2] border border-wine shadow-md flex items-center gap-1.5 transition active:scale-95">
+          <i class="fa-solid fa-envelope-open-text"></i> Open The Letter
+        </a>
+      </nav>
+    </header>
+
+    <!-- ==============================================
+         2. POLAROID PHOTO GALLERY
+    ============================================== -->
+    <section id="memories" class="mt-8 mb-16 scroll-mt-6">
+      <div class="text-center mb-6">
+        <span class="text-[11px] font-sans uppercase tracking-[0.2em] text-antiqueBronze">Chapter 2</span>
+        <h2 class="text-3xl font-display text-burgundy font-bold italic">Snapshot of Memories</h2>
+      </div>
+
+      <div class="space-y-8 px-2" id="galleryContainer">
+        
+        <!-- Polaroid 1 -->
+        <article class="polaroid -rotate-1 mx-auto max-w-[310px]">
+          <div class="washi-tape"></div>
+          <div class="overflow-hidden rounded-sm bg-[#ece3d3] aspect-[4/3] flex items-center justify-center relative group">
+            <img id="img-slot-1" 
+                 src="https://i.imgur.com/GmkJUMi.jpeg" 
+                 alt="The day you celebrated me"
+                 class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                 onerror="this.onerror=null; this.src='https://placehold.co/600x450/e8dac1/4a1515?text=The+Day+You+Celebrated+Me';">
+          </div>
+          <div class="mt-3 text-center">
+            <p class="font-handwriting text-2xl text-ink leading-tight">The day you celebrated me</p>
+          </div>
+        </article>
+
+        <!-- Polaroid 2 -->
+        <article class="polaroid rotate-2 mx-auto max-w-[310px]">
+          <div class="washi-tape"></div>
+          <div class="overflow-hidden rounded-sm bg-[#ece3d3] aspect-[4/3] flex items-center justify-center relative group">
+            <img id="img-slot-2" 
+                 src="https://i.imgur.com/MhkHYIl.jpeg" 
+                 alt="Our second Christmas together"
+                 class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                 onerror="this.onerror=null; this.src='https://placehold.co/600x450/e8dac1/4a1515?text=Our+Second+Christmas';">
+          </div>
+          <div class="mt-3 text-center">
+            <p class="font-handwriting text-2xl text-ink leading-tight">Our second Christmas together</p>
+          </div>
+        </article>
+
+        <!-- Polaroid 3 -->
+        <article class="polaroid -rotate-2 mx-auto max-w-[310px]">
+          <div class="washi-tape"></div>
+          <div class="overflow-hidden rounded-sm bg-[#ece3d3] aspect-[4/3] flex items-center justify-center relative group">
+            <img id="img-slot-3" 
+                 src="https://i.imgur.com/dZHwo47.jpeg" 
+                 alt="A recent date to remember"
+                 class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                 onerror="this.onerror=null; this.src='https://placehold.co/600x450/e8dac1/4a1515?text=A+Recent+Date';">
+          </div>
+          <div class="mt-3 text-center">
+            <p class="font-handwriting text-2xl text-ink leading-tight">A recent date to remember</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ==============================================
+         3. MY GRATITUDE FOR AFFECTION (Flip Cards)
+    ============================================== -->
+    <section id="notes" class="mb-16 scroll-mt-6">
+      <div class="text-center mb-6">
+        <span class="text-[11px] font-sans uppercase tracking-[0.2em] text-antiqueBronze">MY GRATITUDE FOR AFFECTION</span>
+        <h2 class="text-3xl font-display text-burgundy font-bold italic">Little Things I Adore</h2>
+        <p class="font-serif italic text-sm text-sepiaBrown mt-1">Tap a card to reveal the secret note inside</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-2">
+        
+        <!-- Card 1 -->
+        <div class="flip-card" onclick="toggleCard(this)">
+          <div class="flip-card-inner">
+            <div class="flip-card-front vintage-card border border-[#ded0bb] rounded-lg">
+              <i class="fa-regular fa-envelope text-2xl text-burgundy mb-2"></i>
+              <h3 class="font-display font-semibold text-lg text-ink">Reason #1</h3>
+              <p class="text-[11px] font-sans text-antiqueBronze uppercase tracking-widest mt-1">Tap to unfold</p>
+            </div>
+            <div class="flip-card-back shadow-sm">
+              <i class="fa-solid fa-heart text-xs text-burgundy mb-1"></i>
+              <p class="font-handwriting text-xl text-ink leading-snug">"How supported and adored you make me feel, in everything."</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="flip-card" onclick="toggleCard(this)">
+          <div class="flip-card-inner">
+            <div class="flip-card-front vintage-card border border-[#ded0bb] rounded-lg">
+              <i class="fa-regular fa-compass text-2xl text-burgundy mb-2"></i>
+              <h3 class="font-display font-semibold text-lg text-ink">Reason #2</h3>
+              <p class="text-[11px] font-sans text-antiqueBronze uppercase tracking-widest mt-1">Tap to unfold</p>
+            </div>
+            <div class="flip-card-back shadow-sm">
+              <i class="fa-solid fa-heart text-xs text-burgundy mb-1"></i>
+              <p class="font-handwriting text-xl text-ink leading-snug">"Your jokes, clinginess and your 'meows'—they always make me giggle the hardest."</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="flip-card" onclick="toggleCard(this)">
+          <div class="flip-card-inner">
+            <div class="flip-card-front vintage-card border border-[#ded0bb] rounded-lg">
+              <i class="fa-regular fa-mug-hot text-2xl text-burgundy mb-2"></i>
+              <h3 class="font-display font-semibold text-lg text-ink">Reason #3</h3>
+              <p class="text-[11px] font-sans text-antiqueBronze uppercase tracking-widest mt-1">Tap to unfold</p>
+            </div>
+            <div class="flip-card-back shadow-sm">
+              <i class="fa-solid fa-heart text-xs text-burgundy mb-1"></i>
+              <p class="font-handwriting text-xl text-ink leading-snug">"Your care, effort, and pure love are things that money can't buy."</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="flip-card" onclick="toggleCard(this)">
+          <div class="flip-card-inner">
+            <div class="flip-card-front vintage-card border border-[#ded0bb] rounded-lg">
+              <i class="fa-regular fa-star text-2xl text-burgundy mb-2"></i>
+              <h3 class="font-display font-semibold text-lg text-ink">Reason #4</h3>
+              <p class="text-[11px] font-sans text-antiqueBronze uppercase tracking-widest mt-1">Tap to unfold</p>
+            </div>
+            <div class="flip-card-back shadow-sm">
+              <i class="fa-solid fa-heart text-xs text-burgundy mb-1"></i>
+              <p class="font-handwriting text-xl text-ink leading-snug">"You're so stunning. I could look at you forever."</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==============================================
+         4. WAX SEALED LOVE LETTER SECTION
+    ============================================== -->
+    <section id="letter" class="mb-20 scroll-mt-6">
+      <div class="text-center mb-6">
+        <span class="text-[11px] font-sans uppercase tracking-[0.2em] text-antiqueBronze">FROM MY HEART CELLS</span>
+        <h2 class="text-3xl font-display text-burgundy font-bold italic">The Anniversary Letter</h2>
+        <p class="font-serif italic text-sm text-sepiaBrown mt-1">A letter, just for you my Keira</p>
+      </div>
+
+      <!-- Sealed Envelope State -->
+      <div id="envelopeSealed" class="vintage-card rounded-2xl p-6 sm:p-8 text-center border-2 border-[#d5c3aa] relative overflow-hidden transition-all duration-500">
+        
+        <!-- Subtle Vintage Stamp watermark -->
+        <div class="absolute -top-6 -right-6 text-7xl text-[#8c6d3b]/10 select-none pointer-events-none">
+          <i class="fa-solid fa-feather-pointed"></i>
+        </div>
+
+        <div class="py-4">
+          <p class="font-sans text-xs tracking-widest uppercase text-antiqueBronze font-semibold mb-1">CONFIDENTIAL & SPECIAL</p>
+          <p class="font-display text-2xl text-ink italic font-medium">To My Keira</p>
+          <p class="text-xs text-sepiaBrown mt-1 italic font-serif">Two years of compassion, patience, and absolute faithfulness.</p>
+        </div>
+
+        <!-- Wax Seal Interaction -->
+        <div class="flex flex-col items-center justify-center my-6">
+          <button id="breakSealBtn" 
+                  aria-label="Break Wax Seal"
+                  class="wax-seal group">
+            <span class="text-[#f7e6d0] font-display text-2xl font-bold tracking-tighter drop-shadow">
+              II
+            </span>
+          </button>
+          <span class="text-xs font-sans text-burgundy font-medium tracking-wide mt-3 animate-pulse">
+            <i class="fa-solid fa-hand-pointer text-[10px] mr-1"></i> Tap the wax seal to open
+          </span>
+        </div>
+
+        <p class="font-sans text-[11px] text-gray-500 italic max-w-xs mx-auto">
+          "Our relationship doesn't age, it just grows richer and more potent with time."
+        </p>
+      </div>
+
+      <!-- Unfolded Letter State (Hidden Initially) -->
+      <article id="envelopeOpen" class="hidden vintage-card rounded-xl p-6 sm:p-9 border border-[#cebfa8] relative shadow-xl transition-all duration-700 bg-[#fffdfa]">
+        
+        <!-- Letter Decorative Top Ribbon -->
+        <div class="border-b border-[#e5d9c7] pb-3 mb-5 flex justify-between items-center text-xs text-antiqueBronze font-sans">
+          <span><i class="fa-solid fa-calendar-heart mr-1.5 text-burgundy"></i> 2nd Anniversary</span>
+          <span class="italic font-serif">Two Years & Forever More</span>
+        </div>
+
+        <!-- Salutation -->
+        <h3 class="font-handwriting text-3xl sm:text-4xl text-burgundy mb-4">
+          Hey Keira,
+        </h3>
+
+        <!-- Letter Body Text -->
+        <div class="font-handwriting text-2xl sm:text-[26px] text-ink leading-relaxed space-y-4">
+          <p>
+            I hope you're adoring the website so far hehe. Just like how I want you to remember how much I adore this relationship.
+          </p>
+          <p>
+            I know you didn't believe in yourself at the start, and maybe even now. But I believed in you and still do, you know? You're an absolutely amazing person, and even better partner to me.
+          </p>
+          <p>
+            Maybe you think I'm biased, but truth is, I've cherished every single second of the last two years. I'm so happy to be with you—so happy.
+          </p>
+          <p>
+            Remember the day I shoot my shot? Damn, I was nervous, but I'm drowning in joy that I made that decision. Literally no regrets, just pure love.
+          </p>
+          <p>
+            You're always here with me, Keira—even when things were gritty. You're a great listener, you adapt, and you willingly give up your energy to hear me out, even past midnight. Who does that for someone who isn't family? You do.
+          </p>
+          <p>
+            You're everything that I ever dreamed and prayed for when I asked for a partner.
+          </p>
+          <p>
+            Knowing that, I'm truly sorry for past mistakes. All I want is to keep growing and be THAT person for you, always.
+          </p>
+          <p>
+            Happy second anniversary dingus, I can't be any more grateful for what we have.
+          </p>
+          <p>
+            I love you, forever.
+          </p>
+        </div>
+
+        <!-- Handwritten Sign-off -->
+        <div class="mt-8 pt-4 border-t border-[#eee2d0] text-right">
+          <p class="font-handwriting text-2xl text-sepiaBrown mb-1">Bound by my heart's devotion,</p>
+          <p class="font-handwriting text-3xl sm:text-4xl text-burgundy font-bold">I Honor You, My Beloved Consort</p>
+        </div>
+
+        <!-- Re-fold Letter Button -->
+        <div class="text-center mt-6">
+          <button id="closeLetterBtn" class="text-xs font-sans text-antiqueBronze hover:text-burgundy underline tracking-wider">
+            <i class="fa-solid fa-arrow-rotate-left mr-1"></i> Fold letter back
+          </button>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- ==============================================
+         5. VINTAGE FOOTER
+    ============================================== -->
+    <footer class="text-center pb-12 pt-6 border-t border-[#dfd3bf]">
+      <p class="font-handwriting text-2xl text-burgundy">Made with all my soul</p>
+      <p class="text-[11px] font-sans tracking-widest uppercase text-antiqueBronze mt-1">Two years of us, more awaits</p>
+      <div class="mt-4 flex justify-center gap-3 text-antiqueGold opacity-60 text-xs">
+        <i class="fa-solid fa-heart"></i>
+        <i class="fa-solid fa-infinity"></i>
+        <i class="fa-solid fa-heart"></i>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- ==============================================
+       AUDIO & LOGIC JAVASCRIPT
+  ============================================== -->
+  <script>
+    /* ----------------------------------------------------
+       1. SYNTHESIZED ROMANTIC PIANO CHORD ARPEGGIOS
+          Using Native Web Audio API (No external sound files)
+    ---------------------------------------------------- */
+    let audioCtx = null;
+    let isPlaying = false;
+    let melodyTimer = null;
+
+    // Gentle chord progressions in key of C Major / A Minor: warm & nostalgic
+    const melodyChords = [
+      [261.63, 329.63, 392.00, 523.25], // C Major
+      [220.00, 261.63, 329.63, 440.00], // A minor
+      [174.61, 220.00, 261.63, 349.23], // F Major
+      [196.00, 246.94, 293.66, 392.00]  // G Major
+    ];
+
+    let currentChordIndex = 0;
+    let noteIndex = 0;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    // Play a gentle, soft warm bell/piano tone
+    function playWarmTone(freq, duration = 1.4) {
+      if (!audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        
+        // Sine wave for smooth warmth
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+        // Soft vintage attack & long release
+        gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.08, audioCtx.currentTime + 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {
+        console.error("Audio playback error", e);
+      }
+    }
+
+    // Gentle paper rustle / seal break acoustic effect
+    function playRustleSound() {
+      if (!audioCtx) return;
+      try {
+        const bufferSize = audioCtx.sampleRate * 0.25;
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.3));
+        }
+        const noise = audioCtx.createBufferSource();
+        noise.buffer = buffer;
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 1200;
+
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+        noise.start();
+      } catch (err) {
+        // silent fallback
+      }
+    }
+
+    function stepMusic() {
+      const chord = melodyChords[currentChordIndex];
+      const freq = chord[noteIndex];
+      playWarmTone(freq, 1.2);
+
+      noteIndex++;
+      if (noteIndex >= chord.length) {
+        noteIndex = 0;
+        currentChordIndex = (currentChordIndex + 1) % melodyChords.length;
+      }
+    }
+
+    const musicToggleBtn = document.getElementById('musicToggleBtn');
+    const musicIcon = document.getElementById('musicIcon');
+    const musicStatus = document.getElementById('musicStatus');
+
+    function toggleMusic() {
+      initAudio();
+      if (!isPlaying) {
+        isPlaying = true;
+        musicStatus.textContent = 'Playing';
+        musicIcon.classList.add('animate-spin');
+        stepMusic();
+        melodyTimer = setInterval(stepMusic, 580);
+      } else {
+        isPlaying = false;
+        musicStatus.textContent = 'Play Melodies';
+        musicIcon.classList.remove('animate-spin');
+        clearInterval(melodyTimer);
+      }
+    }
+    musicToggleBtn.addEventListener('click', toggleMusic);
+
+    /* ----------------------------------------------------
+       2. WAX SEAL & LOVE LETTER INTERACTION
+    ---------------------------------------------------- */
+    const breakSealBtn = document.getElementById('breakSealBtn');
+    const envelopeSealed = document.getElementById('envelopeSealed');
+    const envelopeOpen = document.getElementById('envelopeOpen');
+    const closeLetterBtn = document.getElementById('closeLetterBtn');
+
+    breakSealBtn.addEventListener('click', () => {
+      initAudio();
+      playRustleSound();
+
+      // Trigger melting/breaking animation
+      breakSealBtn.style.transform = 'scale(0.85) rotate(15deg)';
+      breakSealBtn.style.opacity = '0.6';
+
+      setTimeout(() => {
+        envelopeSealed.classList.add('hidden');
+        envelopeOpen.classList.remove('hidden');
+        envelopeOpen.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Spawn romantic confetti burst
+        spawnHeartsBurst(12);
+      }, 350);
+    });
+
+    closeLetterBtn.addEventListener('click', () => {
+      initAudio();
+      playRustleSound();
+      envelopeOpen.classList.add('hidden');
+      envelopeSealed.classList.remove('hidden');
+      breakSealBtn.style.transform = '';
+      breakSealBtn.style.opacity = '';
+    });
+
+    /* ----------------------------------------------------
+       3. REASONS WHY I LOVE YOU (Flip Cards)
+    ---------------------------------------------------- */
+    function toggleCard(cardElement) {
+      initAudio();
+      playWarmTone(440, 0.4);
+      cardElement.classList.toggle('flipped');
+    }
+
+    /* ----------------------------------------------------
+       4. CLIENT-SIDE PHOTO REPLACEMENT (No Server Needed)
+    ---------------------------------------------------- */
+    let targetedSlotNumber = 1;
+    const slotFileInput = document.getElementById('slotFileInput');
+    const customPhotoInput = document.getElementById('customPhotoInput');
+
+    function triggerSlotUpload(slotNumber) {
+      targetedSlotNumber = slotNumber;
+      slotFileInput.click();
+    }
+
+    slotFileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          const targetImg = document.getElementById(`img-slot-${targetedSlotNumber}`);
+          if (targetImg) {
+            targetImg.src = evt.target.result;
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // General "Add / Replace" button on top of gallery
+    customPhotoInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          // Defaults to replacing Slot 1 or asks user
+          const targetImg = document.getElementById(`img-slot-1`);
+          if (targetImg) {
+            targetImg.src = evt.target.result;
+            targetImg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    /* ----------------------------------------------------
+       5. FLOATING VINTAGE PARTICLES (Hearts & Sparkles)
+    ---------------------------------------------------- */
+    const particlesContainer = document.getElementById('particlesContainer');
+    const icons = ['fa-heart', 'fa-feather', 'fa-sparkles', 'fa-star'];
+
+    function createParticle() {
+      if (document.hidden) return;
+      const el = document.createElement('div');
+      el.className = 'heart-particle text-burgundy opacity-40';
+      
+      const isHeart = Math.random() > 0.3;
+      el.innerHTML = isHeart 
+        ? `<i class="fa-solid fa-heart text-[${Math.floor(Math.random() * 8 + 10)}px]"></i>`
+        : `<i class="fa-solid fa-feather text-[12px]"></i>`;
+
+      el.style.left = `${Math.random() * 95}vw`;
+      el.style.animationDuration = `${Math.random() * 5 + 6}s`;
+      particlesContainer.appendChild(el);
+
+      setTimeout(() => {
+        el.remove();
+      }, 10000);
+    }
+
+    // Burst of hearts when letter is opened
+    function spawnHeartsBurst(count) {
+      for (let i = 0; i < count; i++) {
+        setTimeout(createParticle, i * 60);
+      }
+    }
+
+    // Steady slow ambient trickle of petals
+    setInterval(createParticle, 2200);
+
+    /* ----------------------------------------------------
+       6. LIVE COUNTER LOGIC
+          (Starts with 730 days for 2 years)
+    ---------------------------------------------------- */
+    let baseDays = 730;
+    const counterDays = document.getElementById('counterDays');
+    if (counterDays) {
+      counterDays.textContent = baseDays;
+    }
+  </script>
+</body>
+</html>
